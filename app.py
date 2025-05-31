@@ -23,7 +23,6 @@ def histopathology():
 def about():
     return render_template('about.html')
 
-"""
 @app.route('/resnet_mammography')
 def resnet_mammography():
     return render_template('resnet_mammography.html')
@@ -58,7 +57,7 @@ def vgg_histopathology():
 
 @app.route('/densenet_histopathology')
 def densenet_histopathology():
-    return render_template('densenet_histopathology.html') """
+    return render_template('densenet_histopathology.html') 
 
 if __name__ == '__main__':
     app.run(debug=True)
