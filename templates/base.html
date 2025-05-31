@@ -16,16 +16,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ url_for('index') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
         </div>
@@ -36,54 +33,8 @@
     {% block content %}
     {% endblock %}
 
-    <main class="main-content">
-
-        <section class="card-section">
-
-            <a href="{{ url_for('mammography') }}" class="card">
-                <h2>Mammography</h2>
-            </a>
-            <p>Detect anomalies using mammogram images.</p>
-
-            <a href="{{ url_for('ultrasound') }}" class="card">
-                <h2>Ultrasound</h2>
-            </a>
-            <p>Analyze ultrasound images for medical insights.</p>
-
-            <a href="{{ url_for('histopathology') }}" class="card">
-                <h2>Histopathology</h2>
-            </a>
-            <p>Run predictions on cell histopathology image data.</p>
-
-            <a href="{{ url_for('about') }}" class="card">
-                <h2>About</h2>
-            </a>
-            <p>Detailed information about the study.</p>
-
-        </section>
-
-        <section class="about-section">
-            <h2>About This Project</h2>
-            <p>
-                This project is a part of a graduation thesis focusing on deploying multiple deep learning models
-                trained on different medical imaging datasets. Each model is designed to detect abnormalities
-                and provide predictive diagnostics for a specific type of medical image: Mammography, Ultrasound, and Histopathology.
-            </p>
-            <p>
-                Users can interact with each model by uploading relevant images and receiving AI-driven predictions
-                to support medical decision-making and early diagnosis.
-            </p>
-        </section>
-
-    </main>
-
     {% block footer %}
     {% endblock %}
-
-    <footer class="footer">
-        <p>&copy; 2025 Multimodel Breast Cancer CNN Deep Learning Medical Imaging Project - Kagan Tek</p>
-    </footer> 
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

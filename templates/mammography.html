@@ -1,58 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Deep Learning Medical Imaging Portal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet"/>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %} Mammography Models {% endblock %}
 
-    <header class="header">
-        <h1>Breast Cancer Detection: Mammography Trained CNNs</h1>
-        <p>Select a type of CNN to perform predictions.</p>
-    </header>
-
-    <a href="{{ url_for('index') }}">Home</a>
-
+{% block content %}
     <main class="main-content">
-
         <section class="card-section">
-
             <a href="{{ url_for('resnet_mammography') }}" class="card">
-                <h2>ResNet50 Mammography </h2>
+                <h2>Mammography</h2>
             </a>
-            <p>Input mammography images to a ResNet50 type CNN.</p>
+            <p>ResNet50 CNN Model Trained on DDSM Mammography Dataset.</p>
 
             <a href="{{ url_for('vgg_mammography') }}" class="card">
-                <h2>VGG Mammography</h2>
+                <h2>Ultrasound</h2>
             </a>
-            <p>Input mammography images to a VGG type CNN.</p>
+            <p>Analyze ultrasound images for medical insights.</p>
 
             <a href="{{ url_for('densenet_mammography') }}" class="card">
-                <h2>DenseNet Mammography</h2>
+                <h2>Histopathology</h2>
             </a>
-            <p>Input mammography images to a DenseNet type CNN.</p>
-
+            <p>Run predictions on cell histopathology image data.</p>
         </section>
+{% endblock %}
 
-        <section class="about-section">
-            <h2>About This Project</h2>
-            <p>
-                Please choose a model to perform predictions on mammography images. Each model is designed to detect
-                abnormalities and provide predictive diagnostics for mammography images.
-            </p>
-            <p>
-                Users can interact with each model by uploading relevant images and receiving AI-driven predictions
-                to support medical decision-making and early diagnosis.
-            </p>
-        </section>
-
-    </main>
-
+{% block footer %}
     <footer class="footer">
-        <p>&copy; 2025 Multimodel Breast Cancer CNN Deep Learning Medical Imaging Project - Kagan Tek</p>
+        <p>&copy 2025 Multimodel Breast Cancer CNN Deep Learning Medical Imaging Project - Kagan Tek</p>
+        <p>Dataset Reference -> DDSM Mammography</p>
     </footer>
-
-</body>
-</html>
+{% endblock %}
