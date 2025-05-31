@@ -27,11 +27,15 @@
             </a>
             <p>Analyze ultrasound images for medical insights.</p>
 
-            <a href="{{ url_for('mri') }}" class="card">
-                <h2>MRI</h2>
+            <a href="{{ url_for('histopathology') }}" class="card">
+                <h2>Histopathology</h2>
             </a>
-            <p>Run predictions on MRI scan data.</p>
+            <p>Run predictions on cell histopathology image data.</p>
 
+            <a href="{{ url_for('about') }}" class="card">
+                <h2>About</h2>
+            </a>
+            <p>Detailed information about the study.</p>
         </section>
 
         <section class="about-section">
@@ -39,7 +43,7 @@
             <p>
                 This project is a part of a graduation thesis focusing on deploying multiple deep learning models
                 trained on different medical imaging datasets. Each model is designed to detect abnormalities
-                and provide predictive diagnostics for a specific type of medical image: Mammography, Ultrasound, and MRI.
+                and provide predictive diagnostics for a specific type of medical image: Mammography, Ultrasound, and Histopathology.
             </p>
             <p>
                 Users can interact with each model by uploading relevant images and receiving AI-driven predictions

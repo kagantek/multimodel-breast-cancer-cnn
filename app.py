@@ -15,9 +15,13 @@ def mammography():
 def ultrasound():
     return render_template('ultrasound.html')
 
-@app.route('/mri')
-def mri():
-    return render_template('mri.html')
+@app.route('/histopathology')
+def histopathology():
+    return render_template('histopathology.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/resnet_mammography')
 def resnet_mammography():
@@ -27,8 +31,33 @@ def resnet_mammography():
 def vgg_mammography():
     return render_template('vgg_mammography.html')
 
-@app.route('/alexnet_mammography')
-def alexnet_mammography():
-    return render_template('alexnet_mammography.html')
+@app.route('/densenet_mammography')
+def densenet_mammography():
+    return render_template('densenet_mammography.html')
 
-app.run(debug=True)
+@app.route('/resnet_ultrasound')
+def resnet_ultrasound():
+    return render_template('resnet_ultrasound.html')
+
+@app.route('/vgg_ultrasound')
+def vgg_ultrasound():
+    return render_template('vgg_ultrasound.html')
+
+@app.route('/densenet_ultrasound')
+def densenet_ultrasound():
+    return render_template('densenet_ultrasound.html')
+
+@app.route('/resnet_histopathology')
+def resnet_histopathology():
+    return render_template('resnet_histopathology.html')
+
+@app.route('/vgg_histopathology')
+def vgg_histopathology():
+    return render_template('vgg_histopathology.html')
+
+@app.route('/densenet_histopathology')
+def densenet_histopathology():
+    return render_template('densenet_histopathology.html')
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=8000)

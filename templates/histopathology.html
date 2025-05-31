@@ -9,7 +9,7 @@
 <body>
 
     <header class="header">
-        <h1>Breast Cancer Detection: Mammography Trained CNNs</h1>
+        <h1>Breast Cancer Detection: histopathology Trained CNNs</h1>
         <p>Select a type of CNN to perform predictions.</p>
     </header>
 
@@ -19,28 +19,28 @@
 
         <section class="card-section">
 
-            <a href="{{ url_for('resnet_mammography') }}" class="card">
-                <h2>ResNet50 Mammography </h2>
+            <a href="{{ url_for('resnet_histopathology') }}" class="card">
+                <h2>ResNet50 Histopathology </h2>
             </a>
-            <p>Input mammography images to a ResNet50 type CNN.</p>
+            <p>Input histopathology images to a ResNet50 type CNN.</p>
 
-            <a href="{{ url_for('vgg_mammography') }}" class="card">
-                <h2>VGG Mammography</h2>
+            <a href="{{ url_for('vgg_histopathology') }}" class="card">
+                <h2>VGG Histopathology</h2>
             </a>
-            <p>Input mammography images to a VGG type CNN.</p>
+            <p>Input histopathology images to a VGG type CNN.</p>
 
-            <a href="{{ url_for('densenet_mammography') }}" class="card">
-                <h2>DenseNet Mammography</h2>
+            <a href="{{ url_for('densenet_histopathology') }}" class="card">
+                <h2>DenseNet Histopathology</h2>
             </a>
-            <p>Input mammography images to a DenseNet type CNN.</p>
+            <p>Input histopathology images to a DenseNet type CNN.</p>
 
         </section>
 
         <section class="about-section">
             <h2>About This Project</h2>
             <p>
-                Please choose a model to perform predictions on mammography images. Each model is designed to detect
-                abnormalities and provide predictive diagnostics for mammography images.
+                Please choose a model to perform predictions on histopathology images. Each model is designed to detect
+                abnormalities and provide predictive diagnostics for histopathology images.
             </p>
             <p>
                 Users can interact with each model by uploading relevant images and receiving AI-driven predictions
