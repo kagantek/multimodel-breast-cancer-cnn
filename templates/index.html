@@ -2,7 +2,7 @@
 {% block title %} Home Page {% endblock %}
 
 {% block content %}
-    <section class="card-section">
+    <section class="container">
         <a href="{{ url_for('mammography') }}" class="card">
             <h2>Mammography</h2>
         </a>
@@ -32,10 +32,4 @@
             to support medical decision-making and early diagnosis.
         </p>
     </section>
-{% endblock %}
-
-{% block footer %}
-    <footer class="footer">
-        <p>&copy 2025 Multimodel Breast Cancer CNN Deep Learning Medical Imaging Project - Kagan Tek</p>
-    </footer>
 {% endblock %}
