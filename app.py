@@ -23,6 +23,22 @@ def histopathology():
 def about():
     return render_template('about.html')
 
+@app.route('/notebook')
+def notebook():
+    return render_template('notebook.html')
+
+@app.route('/mammography_notebook')
+def mammography_notebook():
+    return render_template('mammography_notebook.html')
+
+@app.route('/ultrasound_notebook')
+def ultrasound_notebook():
+    return render_template('ultrasound_notebook.html')
+
+@app.route('/histopathology_notebook')
+def histopathology_notebook():
+    return render_template('histopathology_notebook.html')
+
 @app.route('/resnet_mammography')
 def resnet_mammography():
     return render_template('resnet_mammography.html')
