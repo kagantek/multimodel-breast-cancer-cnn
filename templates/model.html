@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="container text-center text-dark ">
+        <h1 class="text-center">{% block modelPredict %}{% endblock %}</h1>
+
+        <form class="p-3 text-center" action='/', method="post" enctype="multipart/form-data">
+            <input class="form-control" type="file" name="imagefile" >
+            <input class="btn btn-primary mt-3"type="submit" value="Predict Image" >
+        </form>
+
+        {% if prediction %}
+            <p class="text-center"> Image is {{prediction}}</p>
+        {% endif %}
+    </section>
+
+    <section class="container text-center text-dark ">
+        <h2 class="text-primary mb-3">About This Project</h2>
+        <p>
+            This project is a part of a graduation thesis focusing on deploying multiple deep learning models
+            trained on different medical imaging datasets. Each model is designed to detect abnormalities
+            and provide predictive diagnostics for a specific type of medical image: Mammography, Ultrasound, and Histopathology.
+        </p>
+        <p>
+            Users can interact with each model by uploading relevant images and receiving AI-driven predictions
+            to support medical decision-making and early diagnosis.
+        </p>
+    </section>
+{% endblock %}
