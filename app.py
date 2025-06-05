@@ -7,18 +7,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/mammography')
-def mammography():
-    return render_template('mammography.html')
-
-@app.route('/ultrasound')
-def ultrasound():
-    return render_template('ultrasound.html')
-
-@app.route('/histopathology')
-def histopathology():
-    return render_template('histopathology.html')
-
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -27,17 +15,41 @@ def about():
 def notebook():
     return render_template('notebook.html')
 
-@app.route('/mammography_notebook')
-def mammography_notebook():
-    return render_template('mammography_notebook.html')
+@app.route('/resnet_mammography_notebook')
+def resnet_mammography_notebook():
+    return render_template('resnet_mammography_notebook.html')
 
-@app.route('/ultrasound_notebook')
-def ultrasound_notebook():
-    return render_template('ultrasound_notebook.html')
+@app.route('/vgg_mammography_notebook')
+def vgg_mammography_notebook():
+    return render_template('vgg_mammography_notebook.html')
 
-@app.route('/histopathology_notebook')
-def histopathology_notebook():
-    return render_template('histopathology_notebook.html')
+@app.route('/densenet_mammography_notebook')
+def densenet_mammography_notebook():
+    return render_template('densenet_mammography_notebook.html')
+
+@app.route('/resnet_ultrasound_notebook')
+def resnet_ultrasound_notebook():
+    return render_template('resnet_ultrasound_notebook.html')
+
+@app.route('/vgg_ultrasound_notebook')
+def vgg_ultrasound_notebook():
+    return render_template('vgg_ultrasound_notebook.html')
+
+@app.route('/densenet_ultrasound_notebook')
+def densenet_ultrasound_notebook():
+    return render_template('densenet_ultrasound_notebook.html')
+
+@app.route('/resnet_histopathology_notebook')
+def resnet_histopathology_notebook():
+    return render_template('resnet_histopathology_notebook.html')
+
+@app.route('/vgg_histopathology_notebook')
+def vgg_histopathology_notebook():
+    return render_template('vgg_histopathology_notebook.html')
+
+@app.route('/densenet_histopathology_notebook')
+def densenet_histopathology_notebook():
+    return render_template('densenet_histopathology_notebook.html')
 
 @app.route('/resnet_mammography')
 def resnet_mammography():
