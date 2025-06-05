@@ -1,6 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import numpy as np
+
+import os
 
 app = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/index')
@@ -51,17 +55,118 @@ def vgg_histopathology_notebook():
 def densenet_histopathology_notebook():
     return render_template('densenet_histopathology_notebook.html')
 
-@app.route('/resnet_mammography')
+@app.route('/resnet_mammography', methods=['GET', 'POST'])
 def resnet_mammography():
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
+    from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+    from tensorflow.keras.models import load_model
+    
+    print("Loading ResNet50 Mammography Model...")
+    modelResnet = load_model('./model/mammography/mammography_resnet.h5', compile=False, custom_objects={'preprocess_input': preprocess_input})
+    print("Model loaded successfully!")
+
+    if request.method == 'POST':
+        imagefile = request.files['imagefile']
+
+        images_dir = "./static/images"
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+
+        image_path = os.path.join(images_dir, imagefile.filename)
+        imagefile.save(image_path)
+
+        image = load_img(image_path, target_size=(224, 224))
+        image = img_to_array(image)
+        image = np.expand_dims(image, axis=0)
+
+        yhat = modelResnet.predict(image, verbose=0)
+        prob = float(yhat[0][0])
+        TAU = 0.49
+        label = "Tumor Detected" if prob >= TAU else "No Tumor Detected"
+        conf = prob if prob >= TAU else 1 - prob
+        prediction = f"{label} ({conf*100:.2f}%) (Threshold: {TAU})"
+
+        return render_template('resnet_mammography.html', prediction=prediction)
+
     return render_template('resnet_mammography.html')
 
-@app.route('/vgg_mammography')
+
+@app.route('/vgg_mammography', methods=['GET', 'POST'])
 def vgg_mammography():
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
+    from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
+    from tensorflow.keras.models import load_model
+
+    print("Loading VGG16 Mammography Model...")
+    modelVgg = load_model('./model/mammography/mammography_vgg.h5', compile=False, custom_objects={'preprocess_input': tensorflow.keras.applications.densenet.preprocess_input})
+    print("Model loaded successfully!")
+    
+    if request.method == 'POST':
+        imagefile = request.files['imagefile']
+
+        images_dir = "./static/images"
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+
+        image_path = os.path.join(images_dir, imagefile.filename)
+        imagefile.save(image_path)
+
+        image = load_img(image_path, target_size=(224, 224))
+        image = img_to_array(image)
+        image = np.expand_dims(image, axis=0)
+
+        yhat = modelVgg.predict(image, verbose=0)
+        prob = float(yhat[0][0])
+        TAU = 0.49
+        label = "Tumor Detected" if prob >= TAU else "No Tumor Detected"
+        conf = prob if prob >= TAU else 1 - prob
+        prediction = f"{label} ({conf*100:.2f}%) (Threshold: {TAU})"
+
+        return render_template('vgg_mammography.html', prediction=prediction)
+
     return render_template('vgg_mammography.html')
 
-@app.route('/densenet_mammography')
+
+@app.route('/densenet_mammography', methods=['GET', 'POST'])
 def densenet_mammography():
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
+    from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
+    from tensorflow.keras.models import load_model
+    
+    print("Loading DenseNet121 Mammography Model...")
+    modelDensenet = load_model('./model/mammography/mammography_densenet.h5', compile=False, custom_objects={'preprocess_input': preprocess_input})
+    print("Model loaded successfully!")
+    
+    if request.method == 'POST':
+        imagefile = request.files['imagefile']
+        
+        images_dir = "./static/images"
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+        
+        image_path = os.path.join(images_dir, imagefile.filename)
+        imagefile.save(image_path)
+
+        image = load_img(image_path, target_size=(224, 224))
+        image = img_to_array(image)
+        image = np.expand_dims(image, axis=0) 
+
+        yhat = modelDensenet.predict(image, verbose=0)
+        probability = float(yhat[0][0])
+
+        prob = float(modelDensenet.predict(image, verbose=0)[0][0])
+        TAU  = 0.22
+        label = "Tumor Detected" if prob >= TAU else "No Tumor Detected"
+        conf  = prob if prob >= TAU else 1 - prob
+        prediction = f"{label} ({conf*100:.2f}%) (Threshold: {TAU})"
+        
+        return render_template('densenet_mammography.html', prediction=prediction)
+
     return render_template('densenet_mammography.html')
+
 
 @app.route('/resnet_ultrasound')
 def resnet_ultrasound():
@@ -88,4 +193,4 @@ def densenet_histopathology():
     return render_template('densenet_histopathology.html') 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=3000, debug=True)
