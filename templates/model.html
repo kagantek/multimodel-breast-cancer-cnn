@@ -4,13 +4,13 @@
     <section class="container text-center text-dark ">
         <h1 class="text-center">{% block modelPredict %}{% endblock %}</h1>
 
-        <form class="p-3 text-center" action='/', method="post" enctype="multipart/form-data">
+        <form class="p-3 text-center" action="{% block url %}{% endblock %}" method="post" enctype="multipart/form-data">
             <input class="form-control" type="file" name="imagefile" >
             <input class="btn btn-primary mt-3"type="submit" value="Predict Image" >
         </form>
 
         {% if prediction %}
-            <p class="text-center"> Image is {{prediction}}</p>
+            <p class="text-center"> {{prediction}}</p>
         {% endif %}
     </section>
 
