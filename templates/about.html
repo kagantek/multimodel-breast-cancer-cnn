@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<section class="container text-dark">
+    <div class="mb-5">
+        <h2 class="text-primary text-center mb-4">About This Project</h2>
+        <p>
+            This graduation project presents a comparative analysis of convolutional neural networks (CNNs) applied to medical imaging data.
+            The primary aim is to evaluate the baseline performance of well-known deep learning architectures across three imaging modalities:
+            <strong>Mammography</strong>, <strong>Ultrasound</strong>, and <strong>Histopathology</strong>.
+        </p>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="text-primary">Imaging Modalities & Datasets</h4>
+        <ul class="list-group list-group-flush bg-dark">
+            <li class="list-group-item bg-dark text-light">
+                🩺 <strong>Mammography</strong><br>
+                <span class="small text-muted">Dataset: <a href="https://www.kaggle.com/datasets/skooch/ddsm-mammography" target="_blank" class="text-primary">DDSM Mammography Dataset</a></span><br>
+                The full dataset contains 55,890 training examples with a class distribution of 14% positive and 86% negative,
+                split across 5 TFRecord files. In this project, only 3 TFRecords were used for consistency, totaling <strong>33,851 images</strong> used across all models.
+            </li>
+            <li class="list-group-item bg-dark text-light">
+                🖼️ <strong>Ultrasound</strong><br>
+                <span class="small text-muted">Dataset: <a href="https://www.kaggle.com/datasets/vuppalaadithyasairam/ultrasound-breast-images-for-breast-cancer" target="_blank" class="text-primary">Ultrasound Breast Cancer Dataset</a></span><br>
+                This dataset contains approximately <strong>9,000 images</strong> with a balanced class distribution. A <strong>70-15-15 split</strong> was used for training, validation, and testing respectively.
+            </li>
+            <li class="list-group-item bg-dark text-light">
+                🧫 <strong>Histopathology</strong><br>
+                <span class="small text-muted">Dataset: <a href="https://www.kaggle.com/datasets/paultimothymooney/breast-histopathology-images" target="_blank" class="text-primary">Breast Histopathology Images</a></span><br>
+                The dataset contains <strong>30,000 images</strong> with perfectly balanced classes. It was split into <strong>70% train, 15% validation, and 15% test</strong> sets.
+            </li>
+        </ul>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="text-primary">Models Trained</h4>
+        <p>
+            For each imaging modality, the following baseline CNN architectures were trained:
+        </p>
+        <ul class="list-group list-group-flush bg-dark">
+            <li class="list-group-item bg-dark text-light">📘 ResNet50</li>
+            <li class="list-group-item bg-dark text-light">📗 VGG16</li>
+            <li class="list-group-item bg-dark text-light">📙 DenseNet121</li>
+        </ul>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="text-primary">Training Setup</h4>
+        <p>
+            To ensure a fair and unbiased model comparison, all models were trained using the exact same hyperparameters and experimental conditions:
+        </p>
+        <ul class="list-group list-group-flush bg-dark">
+            <li class="list-group-item bg-dark text-light">✅ Identical train/validation/test splits per dataset</li>
+            <li class="list-group-item bg-dark text-light">✅ Same number of training epochs</li>
+            <li class="list-group-item bg-dark text-light">✅ Same learning rate and optimizer (e.g., Adam)</li>
+            <li class="list-group-item bg-dark text-light">✅ Same image preprocessing and data augmentation pipeline</li>
+            <li class="list-group-item bg-dark text-light">✅ Same callbacks (early stopping, model checkpointing)</li>
+            <li class="list-group-item bg-dark text-light">✅ All models were baseline only — no fine-tuning of weights beyond pre-trained layers</li>
+        </ul>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="text-primary">Project Objective</h4>
+        <p>
+            The goal of this project is to establish a clear, apples-to-apples comparison of baseline CNN architectures across different medical imaging tasks.
+            This allows for informed model selection in future deep learning systems for diagnostics, and contributes to the literature on performance benchmarking in medical AI.
+        </p>
+    </div>
+</section>
+{% endblock %}
