@@ -142,10 +142,6 @@ def densenet_mammography():
     
     if request.method == 'POST':
         imagefile = request.files['imagefile']
-<<<<<<< HEAD
-=======
-        # Create images directory if it doesn't exist
->>>>>>> 575bf081ec9195fff9c4bf0064ed53c0256ce923
         
         images_dir = "./static/images"
         if not os.path.exists(images_dir):
@@ -153,7 +149,6 @@ def densenet_mammography():
         
         image_path = os.path.join(images_dir, imagefile.filename)
         imagefile.save(image_path)
-<<<<<<< HEAD
 
         image = load_img(image_path, target_size=(224, 224))
         image = img_to_array(image)
@@ -162,19 +157,6 @@ def densenet_mammography():
         yhat = modelDensenet.predict(image, verbose=0)
         probability = float(yhat[0][0])
 
-=======
-        
-        # Load and preprocess the image
-        image = load_img(image_path, target_size=(224, 224))
-        image = img_to_array(image)
-        image = np.expand_dims(image, axis=0) 
-        
-        # Make prediction
-        yhat = modelDensenet.predict(image, verbose=0)
-        probability = float(yhat[0][0])
-        
-        # Determine classification based on probability
->>>>>>> 575bf081ec9195fff9c4bf0064ed53c0256ce923
         prob = float(modelDensenet.predict(image, verbose=0)[0][0])
         TAU  = 0.22
         label = "Tumor Detected" if prob >= TAU else "No Tumor Detected"
