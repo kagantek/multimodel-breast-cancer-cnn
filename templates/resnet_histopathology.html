@@ -1,4 +1,48 @@
 {% extends "model.html" %}
-{% block title %}ResNet50 Histopathology Prediction{% endblock %}
-{% block modelPredict %}ResNet50 Histopathology Model Prediction{% endblock %}
-{% block url %}{{ url_for('resnet_histopathology') }}{% endblock %}
+
+{% block modelPredict %}ResNet50 — Mammography{% endblock %}
+
+{% block architecture_image %}
+<img src="{{ url_for('static', filename='images/resnet_architecture.png') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
+{% endblock %}
+
+
+{% block url %}{{ url_for('resnet_mammography') }}{% endblock %}
+
+{% block metrics %}
+Accuracy   : 0.9782
+Precision  : 0.9227
+Recall     : 0.9078
+F1-score   : 0.9152
+ROC-AUC    : 0.9949
+{% endblock %}
+
+{% block detailed_report %}
+               precision    recall  f1-score   support
+
+           0     0.9863    0.9887    0.9875      2920
+           1     0.9227    0.9078    0.9152       434
+
+    accuracy                         0.9782      3354
+   macro avg     0.9545    0.9483    0.9514      3354
+weighted avg     0.9781    0.9782    0.9782      3354
+{% endblock %}
+
+{% block image1 %}
+<img src="{{ url_for('static', filename='images/mammography_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+{% endblock %}
+
+{% block image2 %}
+<img src="{{ url_for('static', filename='images/mammography_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+{% endblock %}
+
+{% block image3 %}
+<img src="{{ url_for('static', filename='images/mammography_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+{% endblock %}
+
+{%block about_project_title %}
+About ResNet50 Mammography Model{% endblock %}
+
+{% block about_project_content %}
+This model is based on the ResNet50 architecture, specifically designed for mammography image classification. It has been trained on a dataset of mammogram images to distinguish between normal and abnormal cases. The model achieves high accuracy and robust performance metrics, making it suitable for clinical applications in breast cancer detection.
+{% endblock %}

@@ -1,3 +1,48 @@
 {% extends "model.html" %}
-{% block title %}DenseNet121 Ultrasound Prediction{% endblock %}
-{% block modelPredict %}DenseNet121 Ultrasound Model Prediction{% endblock %}
+
+{% block modelPredict %}DenseNet121 — Ultrasound{% endblock %}
+
+{% block architecture_image %}
+<img src="{{ url_for('static', filename='images/densenet_architecture.jpeg') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
+{% endblock %}
+
+
+{% block url %}{{ url_for('densenet_ultrasound') }}{% endblock %}
+
+{% block metrics %}
+Accuracy   : 0.9656
+Precision  : 0.9403
+Recall     : 0.9850
+F1-score   : 0.9621
+ROC-AUC    : 0.9891
+{% endblock %}
+
+{% block detailed_report %}
+               precision    recall  f1-score   support
+
+           0     0.9875    0.9500    0.9684       500
+           1     0.9403    0.9850    0.9621       400
+
+    accuracy                         0.9656       900
+   macro avg     0.9639    0.9675    0.9653       900
+weighted avg     0.9666    0.9656    0.9656       900
+{% endblock %}
+
+{% block image1 %}
+<img src="{{ url_for('static', filename='images/ultrasound_densenet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+{% endblock %}
+
+{% block image2 %}
+<img src="{{ url_for('static', filename='images/ultrasound_densenet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+{% endblock %}
+
+{% block image3 %}
+<img src="{{ url_for('static', filename='images/ultrasound_densenet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+{% endblock %}
+
+{%block about_project_title %}
+About DenseNet121 Ultrasound Model{% endblock %}
+
+{% block about_project_content %}
+This model is based on the DenseNet121 architecture, specifically designed for ultrasound image classification. It has been trained on a dataset of ultrasound images to distinguish between normal and abnormal cases. The model achieves high accuracy and robust performance metrics, making it suitable for clinical applications in breast cancer detection.
+{% endblock %}

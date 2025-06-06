@@ -1,3 +1,48 @@
 {% extends "model.html" %}
-{% block title %}VGG16 Ultrasound Prediction{% endblock %}
-{% block modelPredict %}VGG16 Ultrasound Model Prediction{% endblock %}
+
+{% block modelPredict %}VGG16 — Ultrasound{% endblock %}
+
+{% block architecture_image %}
+<img src="{{ url_for('static', filename='images/vgg_architecture.png') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
+{% endblock %}
+
+
+{% block url %}{{ url_for('vgg_ultrasound') }}{% endblock %}
+
+{% block metrics %}
+Accuracy   : 0.9489
+Precision  : 0.9585
+Recall     : 0.9250
+F1-score   : 0.9415
+ROC-AUC    : 0.9892
+{% endblock %}
+
+{% block detailed_report %}
+               precision    recall  f1-score   support
+
+           0     0.9416    0.9680    0.9546       500
+           1     0.9585    0.9250    0.9415       400
+
+    accuracy                         0.9489       900
+   macro avg     0.9501    0.9465    0.9481       900
+weighted avg     0.9492    0.9489    0.9488       900
+{% endblock %}
+
+{% block image1 %}
+<img src="{{ url_for('static', filename='images/ultrasound_vgg_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+{% endblock %}
+
+{% block image2 %}
+<img src="{{ url_for('static', filename='images/ultrasound_vgg_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+{% endblock %}
+
+{% block image3 %}
+<img src="{{ url_for('static', filename='images/ultrasound_vgg_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+{% endblock %}
+
+{%block about_project_title %}
+About VGG16 Ultrasound Model{% endblock %}
+
+{% block about_project_content %}
+This model is based on the VGG16 architecture, specifically designed for ultrasound image classification. It has been trained on a dataset of ultrasound images to distinguish between normal and abnormal cases. The model achieves high accuracy and robust performance metrics, making it suitable for clinical applications in breast cancer detection.
+{% endblock %}
