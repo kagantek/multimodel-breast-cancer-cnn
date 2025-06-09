@@ -306,7 +306,7 @@ def vgg_ultrasound():
     from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/ultrasound/ultrasound_vgg16.h5'
+    model_path = './model/ultrasound/ultrasound_vgg.h5'
     if not hasattr(vgg_ultrasound, 'model'):
         print("Loading VGG16 Ultrasound Model...")
         vgg_ultrasound.model = load_model(
@@ -434,7 +434,7 @@ def resnet_histopathology():
     from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/histopathology/resnet_histopathology.h5'
+    model_path = './model/histopathology/histopathology_resnet.h5'
     if not hasattr(resnet_histopathology, 'model'):
         print("Loading ResNet50 Histopathology Model...")
         resnet_histopathology.model = load_model(
@@ -498,7 +498,7 @@ def vgg_histopathology():
     from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/histopathology/vgg_histopathology.h5'
+    model_path = './model/histopathology/histopathology_vgg.h5'
     if not hasattr(vgg_histopathology, 'model'):
         print("Loading VGG16 Histopathology Model...")
         vgg_histopathology.model = load_model(
@@ -562,7 +562,7 @@ def densenet_histopathology():
     from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/histopathology/densenet_histopathology.h5'
+    model_path = './model/histopathology/histopathology_densenet.h5'
     if not hasattr(densenet_histopathology, 'model'):
         print("Loading DenseNet121 Histopathology Model...")
         densenet_histopathology.model = load_model(
