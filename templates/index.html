@@ -1,45 +1,22 @@
 {% extends "base.html" %}
-{% block title %} Home Page {% endblock %}
+{% block title %}Home Page{% endblock %}
 
 {% block content %}
     <section class="container text-center mb-5">
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="container col-md-4 mb-4">
                 <div class="card bg-dark text-light shadow-sm border-0 h-100">
                     <div class="card-body">
-                        <h3 class="card-title text-primary">Mammography</h3>
-                        <a href="{{ url_for('resnet_mammography') }}" class="btn btn-outline-primary btn-block my-2">ResNet50 Mammography</a>
-                        <a href="{{ url_for('vgg_mammography') }}" class="btn btn-outline-primary btn-block my-2">VGG16 Mammography</a>
-                        <a href="{{ url_for('densenet_mammography') }}" class="btn btn-outline-primary btn-block my-2">DenseNet121 Mammography</a>
-                    </div>
-                </div>
-            </div>
+                        <h3 class="card-title text-primary">Medical Imaging Modalities  </h3>
+                        <a href="{{ url_for('mammography') }}" class="btn btn-outline-primary btn-block my-2">Mammography</a>
+                        <a href="{{ url_for('ultrasound') }}" class="btn btn-outline-primary btn-block my-2">Ultrasound</a>
+                        <a href="{{ url_for('histopathology') }}" class="btn btn-outline-primary btn-block my-2">Histopathology</a>
 
-            <div class="col-md-4 mb-4">
-                <div class="card bg-dark text-light shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">Ultrasound</h3>
-                        <a href="{{ url_for('resnet_ultrasound') }}" class="btn btn-outline-primary btn-block my-2">ResNet50 Ultrasound</a>
-                        <a href="{{ url_for('vgg_ultrasound') }}" class="btn btn-outline-primary btn-block my-2">VGG16 Ultrasound</a>
-                        <a href="{{ url_for('densenet_ultrasound') }}" class="btn btn-outline-primary btn-block my-2">DenseNet121 Ultrasound</a>
-                    </div>
                 </div>
             </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card bg-dark text-light shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">Histopathology</h3>
-                        <a href="{{ url_for('resnet_histopathology') }}" class="btn btn-outline-primary btn-block my-2">ResNet50 Histopathology</a>
-                        <a href="{{ url_for('vgg_histopathology') }}" class="btn btn-outline-primary btn-block my-2">VGG16 Histopathology</a>
-                        <a href="{{ url_for('densenet_histopathology') }}" class="btn btn-outline-primary btn-block my-2">DenseNet121 Histopathology</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
-    <section class="container text-center text-dark ">
+    <section class="container text-center text-dark">
         <h2 class="text-primary mb-3">About This Project</h2>
         <p>
             This project is a part of a graduation thesis focusing on deploying multiple deep learning models

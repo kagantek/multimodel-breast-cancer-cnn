@@ -27,6 +27,18 @@ def about():
 def notebook():
     return render_template('notebook.html')
 
+@app.route('/mammography')
+def mammography():
+    return render_template('mammography.html')
+
+@app.route('/ultrasound')
+def ultrasound():
+    return render_template('ultrasound.html')
+
+@app.route('/histopathology')
+def histopathology():
+    return render_template('histopathology.html')
+
 @app.route('/mammography_notebook')
 def mammography_notebook():
     return render_template('mammography_notebook.html')
@@ -44,17 +56,17 @@ def densenet_notebook():
     return render_template('densenet_notebook.html')
 
 
-@app.route('/resnet_mammography', methods=['GET', 'POST'])
-def resnet_mammography():
+@app.route('/resnet_mammography_initial_unfrozen', methods=['GET', 'POST'])
+def resnet_mammography_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
     from tensorflow.keras.models import load_model
     
-    model_path = './model/mammography/mammography_resnet.h5'
-    if not hasattr(resnet_mammography, 'model'):
+    model_path = './model/mammography/initial_unfrozen/mammography_resnet.h5'
+    if not hasattr(resnet_mammography_initial_unfrozen, 'model'):
         print("Loading ResNet50 Mammography Model...")
-        resnet_mammography.model = load_model(
+        resnet_mammography_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -87,7 +99,7 @@ def resnet_mammography():
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
 
-            yhat = resnet_mammography.model.predict(x, verbose=0)
+            yhat = resnet_mammography_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.39
             if prob >= TAU:
@@ -103,22 +115,30 @@ def resnet_mammography():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('resnet_mammography.html', prediction=prediction)
+        return render_template('resnet_mammography_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('resnet_mammography.html')
+    return render_template('resnet_mammography_initial_unfrozen.html')
+
+@app.route('/resnet_mammography_finetuned_224', methods=['GET', 'POST'])
+def resnet_mammography_finetuned_224():
+    return render_template('resnet_mammography_finetuned_224.html')
+
+@app.route('/resnet_mammography_finetuned_100', methods=['GET', 'POST'])
+def resnet_mammography_finetuned_100():
+    return render_template('resnet_mammography_finetuned_100.html')
 
 
-@app.route('/vgg_mammography', methods=['GET', 'POST'])
-def vgg_mammography():
+@app.route('/vgg_mammography_initial_unfrozen', methods=['GET', 'POST'])
+def vgg_mammography_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
     from tensorflow.keras.models import load_model
-    
-    model_path = './model/mammography/mammography_vgg.h5'
-    if not hasattr(vgg_mammography, 'model'):
+
+    model_path = './model/mammography/initial_unfrozen/mammography_vgg.h5'
+    if not hasattr(vgg_mammography_initial_unfrozen, 'model'):
         print("Loading VGG16 Mammography Model...")
-        resnet_mammography.model = load_model(
+        vgg_mammography_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -152,7 +172,7 @@ def vgg_mammography():
             x   = np.expand_dims(x, axis=0)
             x   = preprocess_input(x)
 
-            yhat = vgg_mammography.model.predict(x, verbose=0)
+            yhat = vgg_mammography_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.49
             if prob >= TAU:
@@ -168,22 +188,30 @@ def vgg_mammography():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('vgg_mammography.html', prediction=prediction)
+        return render_template('vgg_mammography_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('vgg_mammography.html')
+    return render_template('vgg_mammography_initial_unfrozen.html')
+
+@app.route('/vgg_mammography_finetuned_224', methods=['GET', 'POST'])
+def vgg_mammography_finetuned_224():
+    return render_template('vgg_mammography_finetuned_224.html')
+
+@app.route('/vgg_mammography_finetuned_100', methods=['GET', 'POST'])
+def vgg_mammography_finetuned_100():
+    return render_template('vgg_mammography_finetuned_100.html')
 
 
-@app.route('/densenet_mammography', methods=['GET', 'POST'])
-def densenet_mammography():
+@app.route('/densenet_mammography_initial_unfrozen', methods=['GET', 'POST'])
+def densenet_mammography_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/mammography/mammography_densenet.h5'
-    if not hasattr(densenet_mammography, 'model'):
+    model_path = './model/mammography/initial_unfrozen/mammography_densenet.h5'
+    if not hasattr(densenet_mammography_initial_unfrozen, 'model'):
         print("Loading DenseNet121 Mammography Model...")
-        densenet_mammography.model = load_model(
+        densenet_mammography_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -193,17 +221,17 @@ def densenet_mammography():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('densenet_mammography.html', prediction=error)
+            return render_template('densenet_mammography_initial_unfrozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('densenet_mammography.html', prediction=error)
+            return render_template('densenet_mammography_initial_unfrozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
-            return render_template('densenet_mammography.html', prediction=error)
+            return render_template('densenet_mammography_initial_unfrozen.html', prediction=error)
 
         filename = secure_filename(file.filename)
         images_dir = "./static/images"
@@ -217,7 +245,7 @@ def densenet_mammography():
             x   = np.expand_dims(x, axis=0)
             x   = preprocess_input(x)
 
-            yhat = densenet_mammography.model.predict(x, verbose=0)
+            yhat = densenet_mammography_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.22
             if prob >= TAU:
@@ -233,22 +261,30 @@ def densenet_mammography():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('densenet_mammography.html', prediction=prediction)
+        return render_template('densenet_mammography_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('densenet_mammography.html')
+    return render_template('densenet_mammography_initial_unfrozen.html')
+
+@app.route('/densenet_mammography_finetuned_224', methods=['GET', 'POST'])
+def densenet_mammography_finetuned_224():
+    return render_template('densenet_mammography_finetuned_224.html')
+
+@app.route('/densenet_mammography_finetuned_100', methods=['GET', 'POST'])
+def densenet_mammography_finetuned_100():
+    return render_template('densenet_mammography_finetuned_100.html')
 
 
-@app.route('/resnet_ultrasound', methods=['GET', 'POST'])
-def resnet_ultrasound():
+@app.route('/resnet_ultrasound_initial_unfrozen', methods=['GET', 'POST'])
+def resnet_ultrasound_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
     from tensorflow.keras.models import load_model
     
-    model_path = './model/ultrasound/ultrasound_resnet.h5'
-    if not hasattr(resnet_ultrasound, 'model'):
+    model_path = './model/ultrasound/initial_unfrozen/ultrasound_resnet.h5'
+    if not hasattr(resnet_ultrasound_initial_unfrozen, 'model'):
         print("Loading ResNet50 Ultrasound Model...")
-        resnet_ultrasound.model = load_model(
+        resnet_ultrasound_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -258,17 +294,17 @@ def resnet_ultrasound():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('resnet_ultrasound.html', prediction=error)
+            return render_template('resnet_ultrasound_initial_unfrozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('resnet_ultrasound.html', prediction=error)
+            return render_template('resnet_ultrasound_initial_unfrozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
-            return render_template('resnet_ultrasound.html', prediction=error)
+            return render_template('resnet_ultrasound_initial_unfrozen.html', prediction=error)
 
         filename = secure_filename(file.filename)
         images_dir = "./static/images"
@@ -280,9 +316,8 @@ def resnet_ultrasound():
             img = load_img(image_path, target_size=(224, 224))
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
-            x   = preprocess_input(x)
 
-            yhat = resnet_ultrasound.model.predict(x, verbose=0)
+            yhat = resnet_ultrasound_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.49
             if prob >= TAU:
@@ -298,21 +333,26 @@ def resnet_ultrasound():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('resnet_ultrasound.html', prediction=prediction)
+        return render_template('resnet_ultrasound_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('resnet_ultrasound.html')
+    return render_template('resnet_ultrasound_initial_unfrozen.html')
 
-@app.route('/vgg_ultrasound', methods=['GET', 'POST'])
-def vgg_ultrasound():
+@app.route('/resnet_ultrasound_finetuned', methods=['GET', 'POST'])
+def resnet_ultrasound_finetuned():
+    return render_template('resnet_ultrasound_finetuned.html')
+
+
+@app.route('/vgg_ultrasound_initial_unfrozen', methods=['GET', 'POST'])
+def vgg_ultrasound_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/ultrasound/ultrasound_vgg.h5'
-    if not hasattr(vgg_ultrasound, 'model'):
+    model_path = './model/ultrasound/initial_unfrozen/ultrasound_vgg.h5'
+    if not hasattr(vgg_ultrasound_initial_unfrozen, 'model'):
         print("Loading VGG16 Ultrasound Model...")
-        vgg_ultrasound.model = load_model(
+        vgg_ultrasound_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -322,13 +362,13 @@ def vgg_ultrasound():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('vgg_ultrasound.html', prediction=error)
+            return render_template('vgg_ultrasound_initial_unfrozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('vgg_ultrasound.html', prediction=error)
+            return render_template('vgg_ultrasound_initial_unfrozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
@@ -344,9 +384,8 @@ def vgg_ultrasound():
             img = load_img(image_path, target_size=(224, 224))
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
-            x   = preprocess_input(x)
 
-            yhat = vgg_ultrasound.model.predict(x, verbose=0)
+            yhat = vgg_ultrasound_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.49
             if prob >= TAU:
@@ -362,21 +401,25 @@ def vgg_ultrasound():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('vgg_ultrasound.html', prediction=prediction)
+        return render_template('vgg_ultrasound_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('vgg_ultrasound.html')
+    return render_template('vgg_ultrasound_initial_unfrozen.html')
 
-@app.route('/densenet_ultrasound', methods=['GET', 'POST'])
-def densenet_ultrasound():
+@app.route('/vgg_ultrasound_finetuned', methods=['GET', 'POST'])
+def vgg_ultrasound_finetuned():
+    return render_template('vgg_ultrasound_finetuned.html')
+
+@app.route('/densenet_ultrasound_initial_unfrozen', methods=['GET', 'POST'])
+def densenet_ultrasound_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/ultrasound/ultrasound_densenet.h5'
-    if not hasattr(densenet_ultrasound, 'model'):
+    model_path = './model/ultrasound/initial_unfrozen/ultrasound_densenet.h5'
+    if not hasattr(densenet_ultrasound_initial_unfrozen, 'model'):
         print("Loading DenseNet121 Ultrasound Model...")
-        densenet_ultrasound.model = load_model(
+        densenet_ultrasound_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -386,17 +429,17 @@ def densenet_ultrasound():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('densenet_ultrasound.html', prediction=error)
+            return render_template('densenet_ultrasound_initial_unfrozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('densenet_ultrasound.html', prediction=error)
+            return render_template('densenet_ultrasound_initial_unfrozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
-            return render_template('densenet_ultrasound.html', prediction=error)
+            return render_template('densenet_ultrasound_initial_unfrozen.html', prediction=error)
 
         filename = secure_filename(file.filename)
         images_dir = "./static/images"
@@ -408,7 +451,6 @@ def densenet_ultrasound():
             img = load_img(image_path, target_size=(224, 224))
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
-            x   = preprocess_input(x)
 
             yhat = densenet_ultrasound.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
@@ -426,21 +468,25 @@ def densenet_ultrasound():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('densenet_ultrasound.html', prediction=prediction)
+        return render_template('densenet_ultrasound_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('densenet_ultrasound.html')
+    return render_template('densenet_ultrasound_initial_unfrozen.html')
 
-@app.route('/resnet_histopathology', methods=['GET', 'POST'])
-def resnet_histopathology():
+@app.route('/densenet_ultrasound_finetuned', methods=['GET', 'POST'])
+def densenet_ultrasound_finetuned():
+    return render_template('densenet_ultrasound_finetuned.html')
+
+@app.route('/resnet_histopathology_initial_unfrozen', methods=['GET', 'POST'])
+def resnet_histopathology_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/histopathology/histopathology_resnet.h5'
-    if not hasattr(resnet_histopathology, 'model'):
+    model_path = './model/histopathology/initial_unfrozen/histopathology_resnet.h5'
+    if not hasattr(resnet_histopathology_initial_unfrozen, 'model'):
         print("Loading ResNet50 Histopathology Model...")
-        resnet_histopathology.model = load_model(
+        resnet_histopathology_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -450,17 +496,17 @@ def resnet_histopathology():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('resnet_histopathology.html', prediction=error)
+            return render_template('resnet_histopathology_initial_frozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('resnet_histopathology.html', prediction=error)
+            return render_template('resnet_histopathology_initial_frozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
-            return render_template('resnet_histopathology.html', prediction=error)
+            return render_template('resnet_histopathology_initial_frozen.html', prediction=error)
 
         filename = secure_filename(file.filename)
         images_dir = "./static/images"
@@ -474,7 +520,7 @@ def resnet_histopathology():
             x   = np.expand_dims(x, axis=0)
             x   = preprocess_input(x)
 
-            yhat = resnet_histopathology.model.predict(x, verbose=0)
+            yhat = resnet_histopathology_initial_unfrozen.model.predict(x, verbose=0) 
             prob = float(yhat[0][0])
             TAU  = 0.46
             if prob >= TAU:
@@ -490,21 +536,25 @@ def resnet_histopathology():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('resnet_histopathology.html', prediction=prediction)
+        return render_template('resnet_histopathology_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('resnet_histopathology.html')
+    return render_template('resnet_histopathology_initial_unfrozen.html')
 
-@app.route('/vgg_histopathology', methods=['GET', 'POST'])
-def vgg_histopathology():
+@app.route('/resnet_histopathology_finetuned', methods=['GET', 'POST'])
+def resnet_histopathology_finetuned():
+    return render_template('resnet_histopathology_finetuned.html')
+
+@app.route('/vgg_histopathology_initial_unfrozen', methods=['GET', 'POST'])
+def vgg_histopathology_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/histopathology/histopathology_vgg.h5'
-    if not hasattr(vgg_histopathology, 'model'):
+    model_path = './model/histopathology/initial_unfrozen/histopathology_vgg.h5'
+    if not hasattr(vgg_histopathology_initial_unfrozen, 'model'):
         print("Loading VGG16 Histopathology Model...")
-        vgg_histopathology.model = load_model(
+        vgg_histopathology_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -514,17 +564,17 @@ def vgg_histopathology():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('vgg_histopathology.html', prediction=error)
+            return render_template('vgg_histopathology_initial_unfrozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('vgg_histopathology.html', prediction=error)
+            return render_template('vgg_histopathology_initial_unfrozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
-            return render_template('vgg_histopathology.html', prediction=error)
+            return render_template('vgg_histopathology_initial_unfrozen.html', prediction=error)
 
         filename = secure_filename(file.filename)
         images_dir = "./static/images"
@@ -536,9 +586,8 @@ def vgg_histopathology():
             img = load_img(image_path, target_size=(224, 224))
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
-            x   = preprocess_input(x)
 
-            yhat = vgg_histopathology.model.predict(x, verbose=0)
+            yhat = vgg_histopathology_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.50
             if prob >= TAU:
@@ -554,21 +603,25 @@ def vgg_histopathology():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('vgg_histopathology.html', prediction=prediction)
+        return render_template('vgg_histopathology_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('vgg_histopathology.html')
+    return render_template('vgg_histopathology_initial_unfrozen.html')
 
-@app.route('/densenet_histopathology', methods=['GET', 'POST'])
-def densenet_histopathology():
+@app.route('/vgg_histopathology_finetuned', methods=['GET', 'POST'])
+def vgg_histopathology_finetuned():
+    return render_template('vgg_histopathology_finetuned.html')
+
+@app.route('/densenet_histopathology_initial_unfrozen', methods=['GET', 'POST'])
+def densenet_histopathology_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
     from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
     from tensorflow.keras.models import load_model
 
-    model_path = './model/histopathology/histopathology_densenet.h5'
-    if not hasattr(densenet_histopathology, 'model'):
+    model_path = './model/histopathology/initial_unfrozen/histopathology_densenet.h5'
+    if not hasattr(densenet_histopathology_initial_unfrozen, 'model'):
         print("Loading DenseNet121 Histopathology Model...")
-        densenet_histopathology.model = load_model(
+        densenet_histopathology_initial_unfrozen.model = load_model(
             model_path,
             compile=False,
             custom_objects={'preprocess_input': preprocess_input}
@@ -578,17 +631,17 @@ def densenet_histopathology():
     if request.method == 'POST':
         if 'imagefile' not in request.files:
             error = "No file part in the request."
-            return render_template('densenet_histopathology.html', prediction=error)
+            return render_template('densenet_histopathology_initial_unfrozen.html', prediction=error)
 
         file = request.files['imagefile']
 
         if file.filename == '':
             error = "No file selected."
-            return render_template('densenet_histopathology.html', prediction=error)
+            return render_template('densenet_histopathology_initial_unfrozen.html', prediction=error)
 
         if not allowed_file(file.filename):
             error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
-            return render_template('densenet_histopathology.html', prediction=error)
+            return render_template('densenet_histopathology_initial_unfrozen.html', prediction=error)
 
         filename = secure_filename(file.filename)
         images_dir = "./static/images"
@@ -600,9 +653,8 @@ def densenet_histopathology():
             img = load_img(image_path, target_size=(224, 224))
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
-            x   = preprocess_input(x)
 
-            yhat = densenet_histopathology.model.predict(x, verbose=0)
+            yhat = densenet_histopathology_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
             TAU  = 0.46
             if prob >= TAU:
@@ -618,9 +670,13 @@ def densenet_histopathology():
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        return render_template('densenet_histopathology.html', prediction=prediction)
+        return render_template('densenet_histopathology_initial_unfrozen.html', prediction=prediction)
 
-    return render_template('densenet_histopathology.html')
+    return render_template('densenet_histopathology_initial_unfrozen.html')
+
+@app.route('/densenet_histopathology_finetuned', methods=['GET', 'POST'])
+def densenet_histopathology_finetuned():
+    return render_template('densenet_histopathology_finetuned.html')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000, debug=True)

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Mammography{% endblock %}
+
+{% block content %}
+  <section class="container text-center my-5">
+    <h1 class="text-primary">Mammography Chosen</h1>
+    <p>You can choose between 9 models across 3 training principles:</p>
+    <div class="row">
+      <!-- Initial Unfrozen Column -->
+      <div class="col-md-4">
+        <h4 class="text-secondary">Initial Unfrozen</h4>
+        <ul class="list-unstyled">
+          <li class="my-2">
+            <a href="{{ url_for('resnet_mammography_initial_unfrozen') }}" class="btn btn-outline-primary btn-block">ResNet50</a>
+          </li>
+          <li class="my-2">
+            <a href="{{ url_for('vgg_mammography_initial_unfrozen') }}" class="btn btn-outline-primary btn-block">VGG16</a>
+          </li>
+          <li class="my-2">
+            <a href="{{ url_for('densenet_mammography_initial_unfrozen') }}" class="btn btn-outline-primary btn-block">DenseNet121</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Fine-tuned 224×224 Column -->
+      <div class="col-md-4">
+        <h4 class="text-secondary">Fine-tuned 224×224</h4>
+        <ul class="list-unstyled">
+          <li class="my-2">
+            <a href="{{ url_for('resnet_mammography_finetuned_224') }}" class="btn btn-outline-primary btn-block">ResNet50</a>
+          </li>
+          <li class="my-2">
+            <a href="{{ url_for('vgg_mammography_finetuned_224') }}" class="btn btn-outline-primary btn-block">VGG16</a>
+          </li>
+          <li class="my-2">
+            <a href="{{ url_for('densenet_mammography_finetuned_224') }}" class="btn btn-outline-primary btn-block">DenseNet121</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Fine-tuned 100×100 Column -->
+      <div class="col-md-4">
+        <h4 class="text-secondary">Fine-tuned 100×100</h4>
+        <ul class="list-unstyled">
+          <li class="my-2">
+            <a href="{{ url_for('resnet_mammography_finetuned_100') }}" class="btn btn-outline-primary btn-block">ResNet50</a>
+          </li>
+          <li class="my-2">
+            <a href="{{ url_for('vgg_mammography_finetuned_100') }}" class="btn btn-outline-primary btn-block">VGG16</a>
+          </li>
+          <li class="my-2">
+            <a href="{{ url_for('densenet_mammography_finetuned_100') }}" class="btn btn-outline-primary btn-block">DenseNet121</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}
