@@ -27,6 +27,10 @@ def about():
 def notebook():
     return render_template('notebook.html')
 
+@app.route('/comparison')
+def comparison():
+    return render_template('comparison.html')
+
 @app.route('/mammography')
 def mammography():
     return render_template('mammography.html')

@@ -1,31 +1,31 @@
-{% extends "base.html" %}
-{% block title %}Home Page{% endblock %}
+    {% extends "base.html" %}
+    {% block title %}Home Page{% endblock %}
 
-{% block content %}
-    <section class="container text-center mb-5">
-        <div class="row">
-            <div class="container col-md-4 mb-4">
-                <div class="card bg-dark text-light shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">Medical Imaging Modalities  </h3>
-                        <a href="{{ url_for('mammography') }}" class="btn btn-outline-primary btn-block my-2">Mammography</a>
-                        <a href="{{ url_for('ultrasound') }}" class="btn btn-outline-primary btn-block my-2">Ultrasound</a>
-                        <a href="{{ url_for('histopathology') }}" class="btn btn-outline-primary btn-block my-2">Histopathology</a>
+    {% block content %}
+        <section class="container text-center mb-5">
+            <div class="row">
+                <div class="container col-md-4 mb-4">
+                    <div class="card bg-dark text-light shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <h3 class="card-title text-primary">Medical Imaging Modalities  </h3>
+                            <a href="{{ url_for('mammography') }}" class="btn btn-outline-primary btn-block my-2">Mammography</a>
+                            <a href="{{ url_for('ultrasound') }}" class="btn btn-outline-primary btn-block my-2">Ultrasound</a>
+                            <a href="{{ url_for('histopathology') }}" class="btn btn-outline-primary btn-block my-2">Histopathology</a>
 
+                    </div>
                 </div>
-            </div>
-    </section>
+        </section>
 
-    <section class="container text-center text-dark">
-        <h2 class="text-primary mb-3">About This Project</h2>
-        <p>
-            This project is a part of a graduation thesis focusing on deploying multiple deep learning models
-            trained on different medical imaging datasets. Each model is designed to detect abnormalities
-            and provide predictive diagnostics for a specific type of medical image: Mammography, Ultrasound, and Histopathology.
-        </p>
-        <p>
-            Users can interact with each model by uploading relevant images and receiving AI-driven predictions
-            to support medical decision-making and early diagnosis.
-        </p>
-    </section>
-{% endblock %}
+        <section class="container text-center text-dark">
+            <h2 class="text-primary mb-3">About This Project</h2>
+            <p>
+                This project is a part of a graduation thesis focusing on deploying multiple deep learning models
+                trained on different medical imaging datasets. Each model is designed to detect abnormalities
+                and provide predictive diagnostics for a specific type of medical image: Mammography, Ultrasound, and Histopathology.
+            </p>
+            <p>
+                Users can interact with each model by uploading relevant images and receiving AI-driven predictions
+                to support medical decision-making and early diagnosis.
+            </p>
+        </section>
+    {% endblock %}
