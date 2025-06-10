@@ -28,15 +28,19 @@ def notebook():
     return render_template('notebook.html')
 
 @app.route('/mammography_notebook')
-def resnet_mammography_notebook():
+def mammography_notebook():
     return render_template('mammography_notebook.html')
 
 @app.route('/ultrasound_notebook')
-def vgg_mammography_notebook():
+def ultrasound_notebook():
     return render_template('ultrasound_notebook.html')
 
+@app.route('/histopathology_notebook')
+def histopathology_notebook():
+    return render_template('histopathology_notebook.html')
+
 @app.route('/densenet_notebook')
-def densenet_mammography_notebook():
+def densenet_notebook():
     return render_template('densenet_notebook.html')
 
 
@@ -82,7 +86,6 @@ def resnet_mammography():
             img = load_img(image_path, target_size=(224, 224))
             x   = img_to_array(img)
             x   = np.expand_dims(x, axis=0)
-            x   = preprocess_input(x)
 
             yhat = resnet_mammography.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
