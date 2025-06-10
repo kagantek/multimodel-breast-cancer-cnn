@@ -7,7 +7,7 @@
 {% endblock %}
 
 
-{% block url %}{{ url_for('resnet_mammography_finetuned_224') }}{% endblock %}
+{% block url %}{{ url_for('resnet_mammography_finetuned') }}{% endblock %}
 
 {% block metrics %}
 Accuracy   : 0.9233
@@ -29,15 +29,15 @@ weighted avg     0.9244    0.9233    0.9238      5030
 {% endblock %}
 
 {% block image1 %}
-<img src="{{ url_for('static', filename='images/mammography/fine_tune_224x224/mammography_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+<img src="{{ url_for('static', filename='images/mammography/fine_tune/mammography_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
 {% endblock %}
 
 {% block image2 %}
-<img src="{{ url_for('static', filename='images/mammography/fine_tune_224x224/mammography_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+<img src="{{ url_for('static', filename='images/mammography/fine_tune/mammography_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
 {% endblock %}
 
 {% block image3 %}
-<img src="{{ url_for('static', filename='images/mammography/fine_tune_224x224/mammography_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+<img src="{{ url_for('static', filename='images/mammography/fine_tune/mammography_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
 {% endblock %}
 
 {%block about_project_title %}
