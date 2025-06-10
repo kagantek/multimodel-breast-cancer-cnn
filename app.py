@@ -121,10 +121,128 @@ def resnet_mammography_initial_unfrozen():
 
 @app.route('/resnet_mammography_finetuned_224', methods=['GET', 'POST'])
 def resnet_mammography_finetuned_224():
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
+    from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+    from tensorflow.keras.models import load_model
+    
+    model_path = './model/mammography/fine_tune_224x224/mammography_resnet.h5'
+    if not hasattr(resnet_mammography_finetuned_224, 'model'):
+        print("Loading ResNet50 Mammography Model...")
+        resnet_mammography_finetuned_224.model = load_model(
+            model_path,
+            compile=False,
+            custom_objects={'preprocess_input': preprocess_input}
+        )
+        print("Model loaded successfully!")
+
+    if request.method == 'POST':
+        if 'imagefile' not in request.files:
+            error = "No file part in the request."
+            return render_template('resnet_mammography_finetuned_224.html', prediction=error)
+
+        file = request.files['imagefile']
+
+        if file.filename == '':
+            error = "No file selected."
+            return render_template('resnet_mammography_finetuned_224.html', prediction=error)
+
+        if not allowed_file(file.filename):
+            error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
+            return render_template('resnet_mammography_finetuned_224.html', prediction=error)
+
+        filename = secure_filename(file.filename)
+        images_dir = "./static/images"
+        os.makedirs(images_dir, exist_ok=True)
+        image_path = os.path.join(images_dir, filename)
+        file.save(image_path)
+
+        try:
+            img = load_img(image_path, target_size=(224, 224))
+            x   = img_to_array(img)
+            x   = np.expand_dims(x, axis=0)
+
+            yhat = resnet_mammography_finetuned_224.model.predict(x, verbose=0)
+            prob = float(yhat[0][0])
+            TAU  = 0.76
+            if prob >= TAU:
+                label = "Tumor Detected"
+                conf  = prob
+            else:
+                label = "No Tumor Detected"
+                conf  = 1 - prob
+
+            prediction = f"{label} ({conf*100:.2f}%)  Threshold: {TAU}"
+
+        finally:
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+        return render_template('resnet_mammography_finetuned_224.html', prediction=prediction)
+
     return render_template('resnet_mammography_finetuned_224.html')
 
 @app.route('/resnet_mammography_finetuned_100', methods=['GET', 'POST'])
 def resnet_mammography_finetuned_100():
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
+    from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+    from tensorflow.keras.models import load_model
+
+    model_path = './model/mammography/fine_tune_100x100/mammography_resnet.h5'
+    if not hasattr(resnet_mammography_finetuned_100, 'model'):
+        print("Loading ResNet50 Mammography Model...")
+        resnet_mammography_finetuned_100.model = load_model(
+            model_path,
+            compile=False,
+            custom_objects={'preprocess_input': preprocess_input}
+        )
+        print("Model loaded successfully!")
+
+    if request.method == 'POST':
+        if 'imagefile' not in request.files:
+            error = "No file part in the request."
+            return render_template('resnet_mammography_finetuned_100.html', prediction=error)
+
+        file = request.files['imagefile']
+
+        if file.filename == '':
+            error = "No file selected."
+            return render_template('resnet_mammography_finetuned_100.html', prediction=error)
+
+        if not allowed_file(file.filename):
+            error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
+            return render_template('resnet_mammography_finetuned_100.html', prediction=error)
+
+        filename = secure_filename(file.filename)
+        images_dir = "./static/images"
+        os.makedirs(images_dir, exist_ok=True)
+        image_path = os.path.join(images_dir, filename)
+        file.save(image_path)
+
+        try:
+            img = load_img(image_path, target_size=(100, 100))
+            x   = img_to_array(img)
+            x   = np.expand_dims(x, axis=0)
+
+            yhat = resnet_mammography_finetuned_100.model.predict(x, verbose=0)
+            prob = float(yhat[0][0])
+            TAU  = 0.76
+            if prob >= TAU:
+                label = "Tumor Detected"
+                conf  = prob
+            else:
+                label = "No Tumor Detected"
+                conf  = 1 - prob
+
+            prediction = f"{label} ({conf*100:.2f}%)  Threshold: {TAU}"
+
+        finally:
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+        return render_template('resnet_mammography_finetuned_100.html', prediction=prediction)
+
     return render_template('resnet_mammography_finetuned_100.html')
 
 
@@ -194,6 +312,65 @@ def vgg_mammography_initial_unfrozen():
 
 @app.route('/vgg_mammography_finetuned_224', methods=['GET', 'POST'])
 def vgg_mammography_finetuned_224():
+    import tensorflow as tf
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
+    from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
+    from tensorflow.keras.models import load_model
+    
+    model_path = './model/mammography/fine_tune_224x224/mammography_vgg.h5'
+    if not hasattr(vgg_mammography_finetuned_224, 'model'):
+        print("Loading VGG16 Mammography Model...")
+        vgg_mammography_finetuned_224.model = load_model(
+            model_path,
+            compile=False,
+            custom_objects={'preprocess_input': preprocess_input}
+        )
+        print("Model loaded successfully!")
+
+    if request.method == 'POST':
+        if 'imagefile' not in request.files:
+            error = "No file part in the request."
+            return render_template('vgg_mammography_finetuned_224.html', prediction=error)
+
+        file = request.files['imagefile']
+
+        if file.filename == '':
+            error = "No file selected."
+            return render_template('vgg_mammography_finetuned_224.html', prediction=error)
+
+        if not allowed_file(file.filename):
+            error = "Invalid file type. Only .png, .jpg and .jpeg are allowed."
+            return render_template('vgg_mammography_finetuned_224.html', prediction=error)
+
+        filename = secure_filename(file.filename)
+        images_dir = "./static/images"
+        os.makedirs(images_dir, exist_ok=True)
+        image_path = os.path.join(images_dir, filename)
+        file.save(image_path)
+
+        try:
+            img = load_img(image_path, target_size=(224, 224))
+            x   = img_to_array(img)
+            x   = np.expand_dims(x, axis=0)
+
+            yhat = vgg_mammography_finetuned_224.model.predict(x, verbose=0)
+            prob = float(yhat[0][0])
+            TAU  = 0.76
+            if prob >= TAU:
+                label = "Tumor Detected"
+                conf  = prob
+            else:
+                label = "No Tumor Detected"
+                conf  = 1 - prob
+
+            prediction = f"{label} ({conf*100:.2f}%)  Threshold: {TAU}"
+
+        finally:
+            if os.path.exists(image_path):
+                os.remove(image_path)
+
+        return render_template('vgg_mammography_finetuned_224.html', prediction=prediction)
+
     return render_template('vgg_mammography_finetuned_224.html')
 
 @app.route('/vgg_mammography_finetuned_100', methods=['GET', 'POST'])
