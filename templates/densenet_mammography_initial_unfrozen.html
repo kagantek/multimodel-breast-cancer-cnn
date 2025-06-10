@@ -1,6 +1,7 @@
 {% extends "model.html" %}
 
-{% block modelPredict %}DenseNet121 Initial Frozen — Mammography{% endblock %}
+{% block modelPredict %}DenseNet121 Initial Unfrozen     — Mammography{% endblock %}
+{% block title %}DenseNet121 Initial Unfrozen — Mammography{% endblock %}
 
 {% block architecture_image %}
 <img src="{{ url_for('static', filename='images/densenet_architecture.jpeg') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">

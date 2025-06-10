@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Compare Fine-Tuned Mammography Models{% endblock %}
+
+{% block content %}
+<section class="container text-center my-5">
+  <h1 class="text-primary">Compare Fine-Tuned Mammography</h1>
+  <form action="" method="post" enctype="multipart/form-data" class="mb-4">
+    <input type="file" name="imagefile" class="form-control-file mb-2" required>
+    <button type="submit" class="btn btn-primary">Upload & Predict</button>
+  </form>
+
+  {% if results.error %}
+    <div class="alert alert-danger">{{ results.error }}</div>
+  {% elif results %}
+    <div class="row">
+      {% for name, r in results.items() %}
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ name }}</h5>
+              <p class="card-text">
+                <strong>{{ r.label }}</strong><br>
+                Confidence: {{ r.conf }}<br>
+                Threshold: {{ r.tau }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,47 +1,48 @@
 {% extends "model.html" %}
 
-{% block modelPredict %}ResNet50 — Ultrasound{% endblock %}
+{% block modelPredict %}ResNet50 Initial Unfrozen — Ultrasound{% endblock %}
+{% block title %}ResNet50 Initial Unfrozen Ultrasound Model{% endblock %}
 
 {% block architecture_image %}
 <img src="{{ url_for('static', filename='images/resnet_architecture.png') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
 {% endblock %}
 
 
-{% block url %}{{ url_for('resnet_mammography') }}{% endblock %}
+{% block url %}{{ url_for('resnet_ultrasound_initial_unfrozen') }}{% endblock %}
 
 {% block metrics %}
-Accuracy   : 0.9856
-Precision  : 1.0000
-Recall     : 0.9675
-F1-score   : 0.9835
-ROC-AUC    : 0.9988
+Accuracy   : 0.9897
+Precision  : 0.9895
+Recall     : 0.9895
+F1-score   : 0.9895
+ROC-AUC    : 0.9998
 {% endblock %}
 
 {% block detailed_report %}
                precision    recall  f1-score   support
 
-           0     0.9747    1.0000    0.9872       500
-           1     1.0000    0.9675    0.9835       400
+           0     0.9898    0.9898    0.9898       686
+           1     0.9895    0.9895    0.9895       667
 
-    accuracy                         0.9856       900
-   macro avg     0.9873    0.9838    0.9853       900
-weighted avg     0.9859    0.9856    0.9855       900
+    accuracy                         0.9897      1353
+   macro avg     0.9897    0.9897    0.9897      1353
+weighted avg     0.9897    0.9897    0.9897      1353
 {% endblock %}
 
 {% block image1 %}
-<img src="{{ url_for('static', filename='images/ultrasound_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+<img src="{{ url_for('static', filename='images/ultrasound/initial_unfrozen/ultrasound_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
 {% endblock %}
 
 {% block image2 %}
-<img src="{{ url_for('static', filename='images/ultrasound_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+<img src="{{ url_for('static', filename='images/ultrasound/initial_unfrozen/ultrasound_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
 {% endblock %}
 
 {% block image3 %}
-<img src="{{ url_for('static', filename='images/ultrasound_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+<img src="{{ url_for('static', filename='images/ultrasound/initial_unfrozen/ultrasound_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
 {% endblock %}
 
 {%block about_project_title %}
-About ResNet50 Ultrasound Model{% endblock %}
+About ResNet50 Initial Unfrozen Ultrasound Model{% endblock %}
 
 {% block about_project_content %}
 This model is based on the ResNet50 architecture, specifically designed for ultrasound image classification. It has been trained on a dataset of ultrasound images to distinguish between normal and abnormal cases. The model achieves high accuracy and robust performance metrics, making it suitable for clinical applications in breast cancer detection.

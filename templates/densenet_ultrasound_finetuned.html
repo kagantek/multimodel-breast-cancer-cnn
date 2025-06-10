@@ -1,0 +1,49 @@
+{% extends "model.html" %}
+
+{% block modelPredict %}DenseNet121 Finetuned — Ultrasound{% endblock %}
+{% block title %}DenseNet121 Finetuned — Ultrasound{% endblock %}
+
+{% block architecture_image %}
+<img src="{{ url_for('static', filename='images/densenet_architecture.jpeg') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
+{% endblock %}
+
+
+{% block url %}{{ url_for('densenet_ultrasound_finetuned') }}{% endblock %}
+
+{% block metrics %}
+Accuracy   : 0.9882
+Precision  : 0.9895
+Recall     : 0.9865
+F1-score   : 0.9880
+ROC-AUC    : 0.9997
+{% endblock %}
+
+{% block detailed_report %}
+               precision    recall  f1-score   support
+
+           0     0.9869    0.9898    0.9884       686
+           1     0.9895    0.9865    0.9880       667
+
+    accuracy                         0.9882      1353
+   macro avg     0.9882    0.9882    0.9882      1353
+weighted avg     0.9882    0.9882    0.9882      1353
+{% endblock %}
+
+{% block image1 %}
+<img src="{{ url_for('static', filename='images/ultrasound/fine_tune/ultrasound_densenet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+{% endblock %}
+
+{% block image2 %}
+<img src="{{ url_for('static', filename='images/ultrasound/fine_tune/ultrasound_densenet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+{% endblock %}
+
+{% block image3 %}
+<img src="{{ url_for('static', filename='images/ultrasound/fine_tune/ultrasound_densenet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+{% endblock %}
+
+{%block about_project_title %}
+About DenseNet121 Finetuned Ultrasound Model{% endblock %}
+
+{% block about_project_content %}
+This model is based on the DenseNet121 architecture, specifically designed for ultrasound image classification. It has been trained on a dataset of ultrasound images to distinguish between normal and abnormal cases. The model achieves high accuracy and robust performance metrics, making it suitable for clinical applications in breast cancer detection.
+{% endblock %}
