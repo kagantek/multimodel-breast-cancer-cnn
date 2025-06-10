@@ -7,7 +7,7 @@
 {% endblock %}
 
 
-{% block url %}{{ url_for('vgg_mammography') }}{% endblock %}
+{% block url %}{{ url_for('vgg_mammography_initial_unfrozen') }}{% endblock %}
 
 {% block metrics %}
 Accuracy   : 0.9672
@@ -29,15 +29,15 @@ weighted avg     0.9671    0.9672    0.9672      3354
 {% endblock %}
 
 {% block image1 %}
-<img src="{{ url_for('static', filename='images/mammography_vgg_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+<img src="{{ url_for('static', filename='images/mammography/initial_unfrozen/mammography_vgg_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
 {% endblock %}
 
 {% block image2 %}
-<img src="{{ url_for('static', filename='images/mammography_vgg_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+<img src="{{ url_for('static', filename='images/mammography/initial_unfrozen/mammography_vgg_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
 {% endblock %}
 
 {% block image3 %}
-<img src="{{ url_for('static', filename='images/mammography_vgg_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+<img src="{{ url_for('static', filename='images/mammography/initial_unfrozen/mammography_vgg_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
 {% endblock %}
 
 {%block about_project_title %}

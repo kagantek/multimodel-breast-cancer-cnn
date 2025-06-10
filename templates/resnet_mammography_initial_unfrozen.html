@@ -1,13 +1,14 @@
 {% extends "model.html" %}
 
 {% block modelPredict %}ResNet50 — Mammography{% endblock %}
+{% block title %}ResNet50 Mammography Initial Frozen Model{% endblock %}
 
 {% block architecture_image %}
 <img src="{{ url_for('static', filename='images/resnet_architecture.png') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
 {% endblock %}
 
 
-{% block url %}{{ url_for('resnet_mammography') }}{% endblock %}
+{% block url %}{{ url_for('resnet_mammography_initial_unfrozen') }}{% endblock %}
 
 {% block metrics %}
 Accuracy   : 0.9782
@@ -29,15 +30,15 @@ weighted avg     0.9781    0.9782    0.9782      3354
 {% endblock %}
 
 {% block image1 %}
-<img src="{{ url_for('static', filename='images/mammography_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+<img src="{{ url_for('static', filename='images/mammography/initial_unfrozen/mammography_resnet_confusion_matrix.png') }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
 {% endblock %}
 
 {% block image2 %}
-<img src="{{ url_for('static', filename='images/mammography_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
+<img src="{{ url_for('static', filename='images/mammography/initial_unfrozen/mammography_resnet_learning.png') }}" class="img-fluid img-thumbnail" alt="Training Progress">
 {% endblock %}
 
 {% block image3 %}
-<img src="{{ url_for('static', filename='images/mammography_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+<img src="{{ url_for('static', filename='images/mammography/initial_unfrozen/mammography_resnet_roc_curve.png') }}" class="img-fluid img-thumbnail" alt="ROC Curve">
 {% endblock %}
 
 {%block about_project_title %}
