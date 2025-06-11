@@ -1,6 +1,7 @@
 {% extends "model.html" %}
 
-{% block modelPredict %}ResNet50 — Mammography{% endblock %}
+{% block modelPredict %}ResNet50 Initial Unfrozen — Histopathology{% endblock %}
+{% block title %}ResNet50 Initial Unfrozen — Histopathology{% endblock %}
 
 {% block architecture_image %}
 <img src="{{ url_for('static', filename='images/resnet_architecture.png') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">

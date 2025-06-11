@@ -1,6 +1,8 @@
 {% extends "model.html" %}
 
 {% block modelPredict %}VGG16 Finetuned — Histopathology{% endblock %}
+{% block title %}VGG16 Finetuned — Histopathology{% endblock %}
+
 
 {% block architecture_image %}
 <img src="{{ url_for('static', filename='images/vgg_architecture.png') }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
