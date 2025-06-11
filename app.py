@@ -1316,6 +1316,227 @@ def mammography_finetuned_compare():
 
     return render_template('mammography_finetuned_compare.html', results=results)
 
+@app.route('/ultrasound_initial_compare', methods=['GET', 'POST'])
+def ultrasound_initial_compare():
+    import os
+    import numpy as np
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array
+    from tensorflow.keras.models import load_model
+    from tensorflow.keras.applications.resnet50 import preprocess_input as resnet_pre
+    from tensorflow.keras.applications.vgg16    import preprocess_input as vgg_pre
+    from tensorflow.keras.applications.densenet import preprocess_input as densenet_pre
+
+    # name → (model_path, its preprocess_fn, its tuned threshold)
+    specs = {
+        'ResNet50':    ('./model/ultrasound/initial_unfrozen/ultrasound_resnet.h5',
+                        resnet_pre,    0.43),
+        'VGG16':       ('./model/ultrasound/initial_unfrozen/ultrasound_vgg.h5',
+                        vgg_pre,       0.61),
+        'DenseNet121': ('./model/ultrasound/initial_unfrozen/ultrasound_densenet.h5',
+                        densenet_pre,  0.70),
+    }
+
+    # Load each model once, wiring in its preprocess_input for the Lambda layer
+    if not hasattr(ultrasound_initial_compare, 'models'):
+        ultrasound_initial_compare.models = {}
+        for name, (path, pre_fn, _) in specs.items():
+            ultrasound_initial_compare.models[name] = load_model(
+                path,
+                compile=False,
+                custom_objects={'preprocess_input': pre_fn}
+            )
+
+    results = {}
+    if request.method == 'POST':
+        file = request.files.get('imagefile')
+        if file and allowed_file(file.filename):
+            tmp = os.path.join('static/images', secure_filename(file.filename))
+            os.makedirs(os.path.dirname(tmp), exist_ok=True)
+            file.save(tmp)
+
+            # load & preprocess once
+            img = load_img(tmp, target_size=(224,224))
+            x   = img_to_array(img)[None, ...]    # (1,224,224,3)
+
+            for name, model in ultrasound_initial_compare.models.items():
+                tau  = specs[name][2]
+                # no extra preprocessing: model’s Lambda handles it
+                prob = float(model.predict(x, verbose=0)[0,0])
+                label = "Tumor Detected" if prob >= tau else "No Tumor Detected"
+                conf  = prob if prob >= tau else 1 - prob
+                results[name] = {
+                    'label': label,
+                    'conf':  f"{conf*100:.1f}%",
+                    'tau':   tau
+                }
+
+            os.remove(tmp)
+        else:
+            results['error'] = "Please upload a valid PNG/JPG image."
+
+    return render_template('ultrasound_initial_compare.html', results=results)
+
+
+@app.route('/ultrasound_finetuned_compare', methods=['GET', 'POST'])
+def ultrasound_finetuned_compare():
+    import os
+    import numpy as np
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array
+    from tensorflow.keras.models import load_model
+    from tensorflow.keras.applications.resnet50 import preprocess_input as resnet_pre
+    from tensorflow.keras.applications.vgg16    import preprocess_input as vgg_pre
+    from tensorflow.keras.applications.densenet import preprocess_input as densenet_pre
+
+    # name → (model_path, its preprocess_fn, its tuned threshold)
+    specs = {
+        'ResNet50':    ('./model/ultrasound/fine_tune/ultrasound_resnet.h5',
+                        resnet_pre,    0.65),
+        'VGG16':       ('./model/ultrasound/fine_tune/ultrasound_vgg.h5',
+                        vgg_pre,       0.70),
+        'DenseNet121': ('./model/ultrasound/fine_tune/ultrasound_densenet.h5',
+                        densenet_pre,  0.71),
+    }
+
+    # Load each model once, wiring in its preprocess_input for the Lambda layer
+    if not hasattr(ultrasound_finetuned_compare, 'models'):
+        ultrasound_finetuned_compare.models = {}
+        for name, (path, pre_fn, _) in specs.items():
+            ultrasound_finetuned_compare.models[name] = load_model(
+                path,
+                compile=False,
+                custom_objects={'preprocess_input': pre_fn}
+            )
+
+    results = {}
+    if request.method == 'POST':
+        file = request.files.get('imagefile')
+        if file and allowed_file(file.filename):
+            tmp = os.path.join('static/images', secure_filename(file.filename))
+            os.makedirs(os.path.dirname(tmp), exist_ok=True)
+            file.save(tmp)
+
+            # load & preprocess once
+            img = load_img(tmp, target_size=(224,224))
+            x   = img_to_array(img)[None, ...]    # (1,224,224,3)
+
+            for name, model in ultrasound_finetuned_compare.models.items():
+                tau  = specs[name][2]
+                # no extra preprocessing: model’s Lambda handles it
+                prob = float(model.predict(x, verbose=0)[0,0])
+                label = "Tumor Detected" if prob >= tau else "No Tumor Detected"
+                conf  = prob if prob >= tau else 1 - prob
+                results[name] = {
+                    'label': label,
+                    'conf':  f"{conf*100:.1f}%",
+                    'tau':   tau
+                }
+
+            os.remove(tmp)
+        else:
+            results['error'] = "Please upload a valid PNG/JPG image."
+
+    return render_template('ultrasound_finetuned_compare.html', results=results)
+
+@app.route('/histopathology_initial_compare', methods=['GET', 'POST'])
+def histopathology_initial_compare():
+    import os
+    import numpy as np
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array
+    from tensorflow.keras.models import load_model
+    from tensorflow.keras.applications.resnet50 import preprocess_input as resnet_pre
+    from tensorflow.keras.applications.vgg16    import preprocess_input as vgg_pre
+    from tensorflow.keras.applications.densenet import preprocess_input as densenet_pre
+
+    # name → (model_path, its preprocess_fn, its tuned threshold)
+    specs = {
+        'ResNet50':    ('./model/histopathology/initial_unfrozen/histopathology_resnet.h5',    resnet_pre, 0.43),
+        'VGG16':       ('./model/histopathology/initial_unfrozen/histopathology_vgg.h5',       vgg_pre,    0.43),
+        'DenseNet121': ('./model/histopathology/initial_unfrozen/histopathology_densenet.h5', densenet_pre, 0.49),
+    }
+
+    if not hasattr(histopathology_initial_compare, 'models'):
+        histopathology_initial_compare.models = {}
+        for name, (path, pre_fn, _) in specs.items():
+            histopathology_initial_compare.models[name] = load_model(
+                path,
+                compile=False,
+                custom_objects={'preprocess_input': pre_fn}
+            )
+
+    results = {}
+    if request.method == 'POST':
+        file = request.files.get('imagefile')
+        if file and allowed_file(file.filename):
+            tmp = os.path.join('static/images', secure_filename(file.filename))
+            os.makedirs(os.path.dirname(tmp), exist_ok=True)
+            file.save(tmp)
+
+            img = load_img(tmp, target_size=(224,224))
+            x   = img_to_array(img)[None, ...]   # (1,224,224,3)
+
+            for name, model in histopathology_initial_compare.models.items():
+                tau  = specs[name][2]
+                prob = float(model.predict(x, verbose=0)[0,0])
+                label = "Tumor Detected" if prob >= tau else "No Tumor Detected"
+                conf  = prob if prob >= tau else 1 - prob
+                results[name] = {'label': label, 'conf': f"{conf*100:.1f}%", 'tau': tau}
+
+            os.remove(tmp)
+        else:
+            results['error'] = "Please upload a valid PNG/JPG image."
+
+    return render_template('histopathology_initial_compare.html', results=results)
+
+
+@app.route('/histopathology_finetuned_compare', methods=['GET', 'POST'])
+def histopathology_finetuned_compare():
+    import os
+    import numpy as np
+    from tensorflow.keras.preprocessing.image import load_img, img_to_array
+    from tensorflow.keras.models import load_model
+    from tensorflow.keras.applications.resnet50 import preprocess_input as resnet_pre
+    from tensorflow.keras.applications.vgg16    import preprocess_input as vgg_pre
+    from tensorflow.keras.applications.densenet import preprocess_input as densenet_pre
+
+    specs = {
+        'ResNet50':    ('./model/histopathology/fine_tune/histopathology_resnet.h5',    resnet_pre, 0.41),
+        'VGG16':       ('./model/histopathology/fine_tune/histopathology_vgg.h5',       vgg_pre,    0.46),
+        'DenseNet121': ('./model/histopathology/fine_tune/histopathology_densenet.h5', densenet_pre, 0.50),
+    }
+
+    if not hasattr(histopathology_finetuned_compare, 'models'):
+        histopathology_finetuned_compare.models = {}
+        for name, (path, pre_fn, _) in specs.items():
+            histopathology_finetuned_compare.models[name] = load_model(
+                path,
+                compile=False,
+                custom_objects={'preprocess_input': pre_fn}
+            )
+
+    results = {}
+    if request.method == 'POST':
+        file = request.files.get('imagefile')
+        if file and allowed_file(file.filename):
+            tmp = os.path.join('static/images', secure_filename(file.filename))
+            os.makedirs(os.path.dirname(tmp), exist_ok=True)
+            file.save(tmp)
+
+            img = load_img(tmp, target_size=(224,224))
+            x   = img_to_array(img)[None, ...]
+
+            for name, model in histopathology_finetuned_compare.models.items():
+                tau  = specs[name][2]
+                prob = float(model.predict(x, verbose=0)[0,0])
+                label = "Tumor Detected" if prob >= tau else "No Tumor Detected"
+                conf  = prob if prob >= tau else 1 - prob
+                results[name] = {'label': label, 'conf': f"{conf*100:.1f}%", 'tau': tau}
+
+            os.remove(tmp)
+        else:
+            results['error'] = "Please upload a valid PNG/JPG image."
+
+    return render_template('histopathology_finetuned_compare.html', results=results)
+
 
 
 if __name__ == '__main__':
