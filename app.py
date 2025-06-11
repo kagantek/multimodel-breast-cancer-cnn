@@ -1072,7 +1072,7 @@ def vgg_histopathology_finetuned():
 def densenet_histopathology_initial_unfrozen():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
-    from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
+    from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
     from tensorflow.keras.models import load_model
 
     model_path = './model/histopathology/initial_unfrozen/histopathology_densenet.h5'
@@ -1113,7 +1113,7 @@ def densenet_histopathology_initial_unfrozen():
 
             yhat = densenet_histopathology_initial_unfrozen.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
-            TAU  = 0.49
+            TAU  = 0.47
             if prob >= TAU:
                 label = "Tumor Detected"
                 conf  = prob
@@ -1135,7 +1135,7 @@ def densenet_histopathology_initial_unfrozen():
 def densenet_histopathology_finetuned():
     import tensorflow as tf
     from tensorflow.keras.preprocessing.image import load_img, img_to_array, array_to_img
-    from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
+    from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
     from tensorflow.keras.models import load_model
 
     model_path = './model/histopathology/fine_tune/histopathology_densenet.h5'
@@ -1176,7 +1176,7 @@ def densenet_histopathology_finetuned():
 
             yhat = densenet_histopathology_finetuned.model.predict(x, verbose=0)
             prob = float(yhat[0][0])
-            TAU  = 0.50
+            TAU  = 0.41
             if prob >= TAU:
                 label = "Tumor Detected"
                 conf  = prob
@@ -1193,7 +1193,6 @@ def densenet_histopathology_finetuned():
         return render_template('densenet_histopathology_finetuned.html', prediction=prediction)
 
     return render_template('densenet_histopathology_finetuned.html')
-
 
 @app.route('/mammography_initial_compare', methods=['GET', 'POST'])
 def mammography_initial_compare():
