@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<section class="container text-center text-dark">
+    <h1 class="text-center mb-4">{{ arch_name }} {{ training_name }} - {{ modality_name }}</h1>
+    
+    <img src="{{ url_for('static', filename=arch_image) }}" class="img-fluid img-thumbnail mb-4" alt="Model Architecture">
+
+    <form class="p-3 text-center" action="{{ url_for('prediction.predict', modality=modality, architecture=architecture, training_type=training_type) }}" method="post" enctype="multipart/form-data">
+        <input class="form-control mb-3" type="file" name="imagefile" required>
+        <input class="btn btn-primary" type="submit" value="Predict Image">
+    </form>
+
+    {% if prediction %}
+        <div class="alert alert-info mt-3">
+            <strong>Prediction:</strong> {{ prediction }}
+        </div>
+    {% endif %}
+</section>
+
+<section class="container text-center text-dark my-5">
+    <h2 class="text-primary mb-3">Model Metrics</h2>
+    <pre class="bg-light p-3 rounded border" style="text-align: center;">
+{{ metrics_text }}
+    </pre>
+</section>
+
+<section class="container text-center text-dark my-5">
+    <h2 class="text-primary mb-3">Detailed Classification Report</h2>
+    <pre class="bg-light p-3 rounded border" style="text-align: center;">
+{{ report_text }}
+    </pre>
+</section>
+
+<section class="container text-center text-dark my-5">
+    <h2 class="text-primary mb-3">Model Performance Visualizations</h2>
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <img src="{{ url_for('static', filename=images.confusion_matrix) }}" class="img-fluid img-thumbnail" alt="Confusion Matrix">
+        </div>
+        <div class="col-md-6 mb-3">
+            <img src="{{ url_for('static', filename=images.roc_curve) }}" class="img-fluid img-thumbnail" alt="ROC Curve">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <img src="{{ url_for('static', filename=images.learning) }}" class="img-fluid img-thumbnail" alt="Training Progress">
+        </div>
+    </div>
+</section>
+
+<section class="container text-center text-dark my-5">
+    <h2 class="text-primary mb-3">About {{ arch_name }} {{ modality_name }} Model</h2>
+    <p>{{ about_text }}</p>
+</section>
+{% endblock %}
