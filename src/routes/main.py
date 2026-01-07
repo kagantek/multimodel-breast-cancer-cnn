@@ -20,11 +20,6 @@ def notebook():
     return render_template('notebook.html')
 
 
-@main_bp.route('/comparison')
-def comparison():
-    return render_template('comparison.html')
-
-
 @main_bp.route('/mammography_notebook')
 def mammography_notebook():
     return render_template('mammography_notebook.html')
