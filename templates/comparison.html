@@ -13,9 +13,9 @@
         <div class="card-body">
           <h3 class="card-title text-primary">Mammography</h3>
           <h4 class="text-secondary mt-3">Initial Unfrozen</h4>
-          <a href="{{ url_for('mammography_initial_compare') }}" class="btn btn-outline-primary btn-block my-2">Initial Unfrozen Trained Mammography Models</a>
+          <a href="{{ url_for('comparison.compare', modality='mammography', training_type='initial') }}" class="btn btn-outline-primary btn-block my-2">Initial Unfrozen Trained Mammography Models</a>
           <h4 class="text-secondary mt-4">Fine-tuned</h4>
-          <a href="{{ url_for('mammography_finetuned_compare') }}" class="btn btn-outline-primary btn-block my-2">Finetuned Mammography Models</a>
+          <a href="{{ url_for('comparison.compare', modality='mammography', training_type='finetuned') }}" class="btn btn-outline-primary btn-block my-2">Finetuned Mammography Models</a>
         </div>
       </div>
     </div>
@@ -26,9 +26,9 @@
         <div class="card-body">
           <h3 class="card-title text-primary">Ultrasound</h3>
           <h4 class="text-secondary mt-3">Initial Unfrozen</h4>
-          <a href="{{ url_for('ultrasound_initial_compare') }}" class="btn btn-outline-primary btn-block my-2">Initial Unfrozen Trained Ultrasound Models</a>
+          <a href="{{ url_for('comparison.compare', modality='ultrasound', training_type='initial') }}" class="btn btn-outline-primary btn-block my-2">Initial Unfrozen Trained Ultrasound Models</a>
           <h4 class="text-secondary mt-4">Fine-tuned</h4>
-          <a href="{{ url_for('ultrasound_finetuned_compare') }}" class="btn btn-outline-primary btn-block my-2">Finetuned Ultrasound Models</a>
+          <a href="{{ url_for('comparison.compare', modality='ultrasound', training_type='finetuned') }}" class="btn btn-outline-primary btn-block my-2">Finetuned Ultrasound Models</a>
         </div>
       </div>
     </div>
@@ -39,9 +39,9 @@
         <div class="card-body">
           <h3 class="card-title text-primary">Histopathology</h3>
           <h4 class="text-secondary mt-3">Initial Unfrozen</h4>
-          <a href="{{ url_for('histopathology_initial_compare') }}" class="btn btn-outline-primary btn-block my-2">Initial Unfrozen Trained Histopathology Models</a>
+          <a href="{{ url_for('comparison.compare', modality='histopathology', training_type='initial') }}" class="btn btn-outline-primary btn-block my-2">Initial Unfrozen Trained Histopathology Models</a>
           <h4 class="text-secondary mt-4">Fine-tuned</h4>
-          <a href="{{ url_for('histopathology_finetuned_compare') }}" class="btn btn-outline-primary btn-block my-2">Finetuned Histopathology Models</a>
+          <a href="{{ url_for('comparison.compare', modality='histopathology', training_type='finetuned') }}" class="btn btn-outline-primary btn-block my-2">Finetuned Histopathology Models</a>
         </div>
       </div>
     </div>
