@@ -1,5 +1,7 @@
 # Multi-Model Breast Cancer CNN
 
+Author: Kağan Tek
+
 A Flask web application for breast cancer classification using deep learning models trained on three medical imaging modalities.
 
 ## Overview
